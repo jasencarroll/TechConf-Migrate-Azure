@@ -36,7 +36,7 @@ You will need to install the following locally:
    bash resources.sh
    ```
 
-2. Update Config & Local Environments
+2. Update WebApp
 
 - Open the web folder and update the following in the `config.py` file
   - `POSTGRES_URL`
@@ -45,36 +45,57 @@ You will need to install the following locally:
   - `POSTGRES_DB`
   - `SERVICE_BUS_CONNECTION_STRING`
 
-- Deploy a Function
+- Deploy WebApp
 
-   ```bash
-   func init function --python
-   cd function
-   ```
+```bash
+export FLASK_RUN=application.py
 
-- Read your aquired packages carefully and find the easter egg in function/README.md
-   - save `__init__.py`
-   - start building requirements.txt
+az webapp up \
+   --resource-group $resourceGroup \
+   --name $webApp \
+   --sku=F1 \
+   --verbose
 
+```
 
-
-
-4. Create App Service plan
-5. Create a storage account
-6. Deploy the web app
+That's not working so we'll get the backend going.
 
 ### Part 2: Create and Publish Azure Function
 
 1. Create an Azure Function in the `function` folder that is triggered by the service bus queue created in Part 1.
 
-      **Note**: Skeleton code has been provided in the **README** file located in the `function` folder. You will need to copy/paste this code into the `__init.py__` file in the `function` folder.
-      - The Azure Function should do the following:
-         - Process the message which is the `notification_id`
-         - Query the database using `psycopg2` library for the given notification to retrieve the subject and message
-         - Query the database to retrieve a list of attendees (**email** and **first name**)
-         - Loop through each attendee and send a personalized subject message
-         - After the notification, update the notification status with the total number of attendees notified
-2. Publish the Azure Function
+   - Deploy a Function
+
+      ```bash
+      func init function --python
+      cd function
+      pipenv install
+      pipenv shell
+      ```
+
+# Note: PostgreSQL will need to be running locally soon. I wonder if a cloud shell could deploy the WebApp. Signing off - JC02Mar2023
+
+2. Develop the function:
+
+   - The Azure Function should do the following:
+      - Process the message which is the `notification_id`
+      - Query the database using `psycopg2` library for the given notification to retrieve the subject and message
+      - Query the database to retrieve a list of attendees (**email** and **first name**)
+      - Loop through each attendee and send a personalized subject message
+      - After the notification, update the notification status with the total number of attendees notified.
+
+3. Run the WebApp locally to potentially figure out why the deploy isn't working:`func start`
+
+4. Run the FrontEnd locally:
+
+   - In a different terminal:
+      ```bash
+      cd web/
+      pipenv install
+      pipenv shell
+      export FLASK_APP=application.py
+      python3 application.py
+      ```
 
 ### Part 3: Refactor `routes.py`
 
