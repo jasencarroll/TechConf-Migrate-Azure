@@ -4,7 +4,6 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-cmake = "==3.22.5"
 adal = "==1.2.3"
 astroid = "==2.4.1"
 azure-common = "==1.1.25"
