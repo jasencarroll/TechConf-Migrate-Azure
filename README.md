@@ -62,18 +62,14 @@ That's not working so we'll get the backend going.
 
 ### Part 2: Create and Publish Azure Function
 
-1. Create an Azure Function in the `function` folder that is triggered by the service bus queue created in Part 1.
-
-   - Deploy a Function
+1. Create local function:
 
       ```bash
       func init function --python
       cd function
       pipenv install
       pipenv shell
-      ```
-
-# Note: PostgreSQL will need to be running locally soon. I wonder if a cloud shell could deploy the WebApp. Signing off - JC02Mar2023
+      ```   
 
 2. Develop the function:
 
@@ -89,13 +85,13 @@ That's not working so we'll get the backend going.
 4. Run the FrontEnd locally:
 
    - In a different terminal:
-      ```bash
-      cd web/
-      pipenv install
-      pipenv shell
-      export FLASK_APP=application.py
-      python3 application.py
-      ```
+   ```bash
+   cd web/
+   pipenv install
+   pipenv shell
+   export FLASK_APP=application.py
+   python3 application.py
+   ```
 
 ### Part 3: Refactor `routes.py`
 

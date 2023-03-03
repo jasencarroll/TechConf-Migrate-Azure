@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 [[source]]
 url = "https://pypi.org/simple"
 verify_ssl = true
@@ -49,16 +48,3 @@ wrapt = "==1.12.1"
 
 [requires]
 python_version = "3.8"
-=======
-[[source]]
-url = "https://pypi.org/simple"
-verify_ssl = true
-name = "pypi"
-
-[packages]
-
-[dev-packages]
-
-[requires]
-python_version = "3.8"
->>>>>>> 39061efec804436be7e2ad96a1abd7700584ec4e
