@@ -106,6 +106,7 @@ That's not working so we'll get the backend going.
 
 2. Develop the function:
 
+   - [Reference Material](https://github.com/jasenc/tournamentResults/blob/main/tournament.py)
    - The Azure Function should do the following:
       - Process the message which is the `notification_id`
       - Query the database using `psycopg2` library for the given notification to retrieve the subject and message
