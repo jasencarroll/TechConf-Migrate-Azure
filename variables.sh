@@ -5,7 +5,7 @@
 # General purpose variables
 # randomID=$RANDOM
 ########################################
-randomID=jc998657
+randomID=jc998757
 resourceGroup=$"rg$randomID"
 ###########################################
 # Must be unique worldwide
