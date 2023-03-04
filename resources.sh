@@ -57,4 +57,12 @@ az functionapp create \
 az postgres db create \
   --name $sqlDB \
   --resource-group $resourceGroup \
-  --server $elephantServer
+  --server $elephantServer            
+  
+  pg_restore -h postjc998657.postgres.database.azure.com \
+    -p 5432 \
+    --no-tablespaces \
+    -W -O -F t -x \
+    -d techconfdb \
+    -U sql_admin@postjc998657 \
+    C:\Users\jasen\dev\migration\data\techconfdb_backup.tar
