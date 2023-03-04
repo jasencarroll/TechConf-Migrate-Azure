@@ -40,8 +40,9 @@ You will need to install the following locally:
 
    - Allow all IPs
    - Restore DB:
-      - If using pgAdmin it might fail when it really worked. 
+      - If using pgAdmin it might fail when it really worked.
       - I found that out by using the following and then refactored and added it to my resources.sh
+
          ```bash
             pg_restore -h postjc998657.postgres.database.azure.com \
             -p 5432 \
@@ -51,35 +52,44 @@ You will need to install the following locally:
             -U sql_admin@postjc998657 \
             C:\Users\jasen\dev\migration\data\techconfdb_backup.tar
          ```
+
       `-W` is a force password on log in
       `-O` no need to import the owner
       `-F t` importing a tar file
       `-x` prevent restoration of access privileges
       `-d` is the database
       `-U` is the user
-      - Finally is the path to the .tar file. 
+      - Finally is the path to the .tar file.
       </br>
 
-2. Update WebApp
+3. Service Bus
 
-- Open the web folder and update the following in the `config.py` file
-  - `POSTGRES_URL`
-  - `POSTGRES_USER`
-  - `POSTGRES_PW`
-  - `POSTGRES_DB`
-  - `SERVICE_BUS_CONNECTION_STRING`
+   - Create `notificationqueue` using the Azure portal.
 
-- Deploy WebApp
+   - Note: using partioning will increase porformance
+   - This should be done once under the ServiceBus and you'll need the connection string.
+   - Then done a second time under StorageAccount.
 
-```bash
-export FLASK_RUN=application.py
+4. Update WebApp
 
-az webapp up \
-   --resource-group $resourceGroup \
-   --name $webApp \
-   --sku=F1 \
-   --verbose
-```
+   - Open the web folder and update the following in the `config.py` file
+   - `POSTGRES_URL`
+   - `POSTGRES_USER`
+   - `POSTGRES_PW`
+   - `POSTGRES_DB`
+   - `SERVICE_BUS_CONNECTION_STRING`
+
+   - Deploy WebApp
+
+   ```bash
+   export FLASK_RUN=application.py
+
+   az webapp up \
+      --resource-group $resourceGroup \
+      --name $webApp \
+      --sku=F1 \
+      --verbose
+   ```
 
 That's not working so we'll get the backend going.
 
@@ -92,7 +102,7 @@ That's not working so we'll get the backend going.
       cd function
       pipenv install
       pipenv shell
-      ```   
+      ```
 
 2. Develop the function:
 
@@ -109,6 +119,7 @@ That's not working so we'll get the backend going.
 4. Run the FrontEnd locally:
 
    - In a different terminal:
+
    ```bash
    cd web/
    pipenv install

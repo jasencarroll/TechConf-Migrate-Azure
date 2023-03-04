@@ -4,10 +4,17 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
+certifi = "==2022.12.7"
+distlib = "==0.3.6"
+filelock = "==3.9.0"
+pipenv = "==2023.2.18"
+platformdirs = "==3.0.0"
+virtualenv = "==20.19.0"
+virtualenv-clone = "==0.5.7"
 azure-functions = "*"
-psycopg2-binary = "*"
-azure-servicebus = "*"
-sendgrid = "*"
+sendgrid = "==6.3.0"
+azure-servicebus = "==0.50.2"
+psycopg2-binary = "==2.8.6"
 
 [dev-packages]
 
