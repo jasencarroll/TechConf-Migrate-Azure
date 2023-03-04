@@ -59,10 +59,10 @@ az postgres db create \
   --resource-group $resourceGroup \
   --server $elephantServer            
   
-  pg_restore -h postjc998657.postgres.database.azure.com \
-    -p 5432 \
-    --no-tablespaces \
-    -W -O -F t -x \
-    -d techconfdb \
-    -U sql_admin@postjc998657 \
-    C:\Users\jasen\dev\migration\data\techconfdb_backup.tar
+pg_restore -h $elephantServer.postgres.database.azure.com \
+  -p 5432 \
+  --no-tablespaces \
+  -W -O -F t -x \
+  -d $sqlDB \
+  -U $sql_admin@$elephantServer\
+  /c/Users/jasen/dev/migration/data/techconfdb_backup.tar
