@@ -14,12 +14,27 @@ az postgres server create \
   -n $elephantServer \
   -g $resourceGroup \
   --location $region \
-  --admin-user sql_admin \
-  --admin-password P@ssword
+  --admin-user $userAdmin \
+  --admin-password $AdminPass
 
 az postgres server show \
   --resource-group $resourceGroup \
   --name $elephantServer
+
+# Update firewalls
+az postgres server firewall-rule create \
+  --resource-group $resourceGroup \
+  --server $sqlDB \
+  --name AzureAcess \
+  --start-ip-address 0.0.0.0 \
+  --end-ip-address 255.255.255.255 
+
+az postgres server firewall-rule create \
+  --resource-group $resourceGroup
+  --server $sqlDB \
+  --name clientIP \
+  --startip-address $clientIP \
+  --end-address $clientIP
 
 # then create a storage account
 az storage account create \
@@ -52,17 +67,17 @@ az functionapp create \
   --runtime python
 
 # Finally add the storage account, like it says in the order of the README.md \
-# because the server will be available by now. 
-
+# because the server will be available by now to create the SQL database
 az postgres db create \
   --name $sqlDB \
   --resource-group $resourceGroup \
-  --server $elephantServer            
-  
+  --server $elephantServer   
+
+#Restore the database  
 pg_restore -h $elephantServer.postgres.database.azure.com \
   -p 5432 \
   --no-tablespaces \
   -W -O -F t -x \
   -d $sqlDB \
-  -U $sql_admin@$elephantServer\
+  -U $userAdmin@$elephantServer\
   /c/Users/jasen/dev/migration/data/techconfdb_backup.tar
