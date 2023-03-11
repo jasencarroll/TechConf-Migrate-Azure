@@ -1,9 +1,5 @@
 # TechConf Registration Website
 
-Looks like I wasn't able to restore the entire project.
-
-jc 11Mar2023
-
 ## Project Overview
 
 The TechConf website allows attendees to register for an upcoming conference. Administrators can also view the list of attendees and notify all attendees via a personalized email message.
@@ -39,8 +35,6 @@ You will need to install the following locally:
    ```bash
    bash resources.sh
    ```
-
-   Note: Current version will take care of steps 2 and 3 as well. 
 
 2. DB Upload & config
 
@@ -135,15 +129,11 @@ That's not working so we'll get the backend going.
    python3 application.py
    ```
 
-   Note: currently able to run API and FrontEnd if URLs are in place.
-
 ### Part 3: Refactor `routes.py`
 
 1. Refactor the post logic in `web/app/routes.py -> notification()` using servicebus `queue_client`:
    - The notification method on POST should save the notification object and queue the notification id for the function to pick it up
 2. Re-deploy the web app to publish changes
-
-   Note: data lose here
 
 ## Monthly Cost Analysis
 
